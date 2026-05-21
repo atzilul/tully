@@ -9,8 +9,14 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
+        cream: "#FAF6F0",
+        terracotta: "#C4704A",
+        olive: "#6B7A4E",
+        charcoal: "#2C2420",
+      },
+      fontFamily: {
+        display: ["Cormorant Garamond", "serif"],
+        body: ["Heebo", "sans-serif"],
       },
     },
   },

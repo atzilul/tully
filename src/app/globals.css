@@ -1,27 +1,299 @@
+@import url('https://fonts.googleapis.com/css2?family=Heebo:wght@200;300;400;500;600;700;800&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --cream: #FAF6F0;
+  --cream-dark: #F2EAE0;
+  --terracotta: #C4704A;
+  --terracotta-light: #D98A65;
+  --terracotta-pale: #F0D5C5;
+  --olive: #6B7A4E;
+  --olive-light: #8A9A65;
+  --olive-pale: #E4EAD8;
+  --charcoal: #2C2420;
+  --warm-gray: #8A7A72;
+  --linen: #EDE5D8;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  width: 100%;
+  min-height: 100%;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--cream);
+  color: var(--charcoal);
+  font-family: 'Heebo', sans-serif;
+  direction: rtl;
+  text-align: right;
+  -webkit-font-smoothing: antialiased;
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+.font-display {
+  font-family: 'Cormorant Garamond', serif;
+}
+
+/* Organic blob shapes */
+.blob-1 { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+.blob-2 { border-radius: 40% 60% 70% 30% / 40% 70% 30% 60%; }
+.blob-3 { border-radius: 50% 50% 40% 60% / 30% 60% 40% 70%; }
+
+/* Animated gradient background */
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.hero-gradient {
+  background: linear-gradient(
+    135deg,
+    #FAF6F0 0%, #F5EDE0 20%, #EFE0CC 40%,
+    #F0D5C5 60%, #F5EDE0 80%, #FAF6F0 100%
+  );
+  background-size: 300% 300%;
+  animation: gradientShift 12s ease infinite;
+}
+
+/* Spinner */
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* WhatsApp pulse */
+@keyframes pulse-wa {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.5); }
+  50% { box-shadow: 0 0 0 14px rgba(37, 211, 102, 0); }
+}
+.whatsapp-pulse { animation: pulse-wa 2.5s ease-in-out infinite; }
+
+/* Fade up */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(28px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.fade-up { animation: fadeUp 0.9s ease forwards; }
+.fade-up-delay-1 { animation: fadeUp 0.9s ease 0.1s forwards; opacity: 0; }
+.fade-up-delay-2 { animation: fadeUp 0.9s ease 0.2s forwards; opacity: 0; }
+.fade-up-delay-3 { animation: fadeUp 0.9s ease 0.35s forwards; opacity: 0; }
+.fade-up-delay-4 { animation: fadeUp 0.9s ease 0.5s forwards; opacity: 0; }
+
+/* Card hover lift */
+.card-lift {
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+.card-lift:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 24px 48px rgba(44, 36, 32, 0.13);
+}
+
+/* Nav underline */
+.nav-link { position: relative; }
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -3px;
+  right: 0;
+  width: 0;
+  height: 1.5px;
+  background: var(--terracotta);
+  transition: width 0.3s ease;
+}
+.nav-link:hover::after { width: 100%; }
+
+/* Section label */
+.section-tag {
+  display: inline-block;
+  font-size: 0.68rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--terracotta);
+  background: var(--terracotta-pale);
+  padding: 0.3rem 1rem;
+  border-radius: 100px;
+  font-weight: 500;
+}
+
+/* Pricing featured badge */
+.pricing-featured { border: 2px solid var(--terracotta); position: relative; }
+.pricing-featured::before {
+  content: 'פופולרי';
+  position: absolute;
+  top: -14px;
+  right: 50%;
+  transform: translateX(50%);
+  background: var(--terracotta);
+  color: white;
+  font-size: 0.68rem;
+  padding: 3px 16px;
+  border-radius: 100px;
+  white-space: nowrap;
+  font-family: 'Heebo', sans-serif;
+}
+
+/* Input focus */
+input:focus, textarea:focus, select:focus {
+  outline: none;
+  border-color: var(--terracotta) !important;
+  box-shadow: 0 0 0 3px rgba(196, 112, 74, 0.15);
+}
+
+/* Ornamental divider */
+.divider-ornament {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  color: var(--terracotta-pale);
+}
+.divider-ornament::before,
+.divider-ornament::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to left, transparent, #D5A898, transparent);
+}
+
+
+/* ── Scroll reveal animations ── */
+
+:root {
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-back: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes revealUp {
+  from { opacity: 0; transform: translateY(36px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes revealLeft {
+  from { opacity: 0; transform: translateX(-44px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes revealRight {
+  from { opacity: 0; transform: translateX(44px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes revealScale {
+  from { opacity: 0; transform: scale(0.88); }
+  to   { opacity: 1; transform: scale(1); }
+}
+@keyframes revealFade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes revealBlur {
+  from { opacity: 0; filter: blur(8px); transform: translateY(14px); }
+  to   { opacity: 1; filter: blur(0px); transform: translateY(0); }
+}
+
+.reveal       { animation: revealUp    0.8s var(--ease-out-expo) both; }
+.reveal-left  { animation: revealLeft  0.8s var(--ease-out-expo) both; }
+.reveal-right { animation: revealRight 0.8s var(--ease-out-expo) both; }
+.reveal-scale { animation: revealScale 0.65s var(--ease-out-back) both; }
+.reveal-fade  { animation: revealFade  1s   var(--ease-out-expo) both; }
+.reveal-blur  { animation: revealBlur  0.9s var(--ease-out-expo) both; }
+
+/* Stagger delays */
+.reveal-delay-1 { animation-delay: 0.08s; }
+.reveal-delay-2 { animation-delay: 0.18s; }
+.reveal-delay-3 { animation-delay: 0.28s; }
+.reveal-delay-4 { animation-delay: 0.40s; }
+.reveal-delay-5 { animation-delay: 0.54s; }
+
+/* Section transitions — wave dividers */
+.wave-top::before {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 70px;
+  background: inherit;
+  clip-path: ellipse(55% 100% at 50% 100%);
+  margin-top: -70px;
+}
+
+/* About parallax */
+.parallax-about {
+  transition: transform 0.1s linear;
+}
+
+/* About desktop/mobile visibility */
+.about-mobile { display: none; }
+.about-desktop { display: block; }
+@media (max-width: 768px) {
+  .about-mobile { display: block; }
+  .about-desktop { display: none; }
+}
+
+/* About grid responsive */
+@media (max-width: 768px) {
+  .about-grid {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
   }
+  .about-grid > div {
+    padding: 16px 18px !important;
+    font-size: 0.82rem !important;
+  }
+  .about-section-inner {
+    padding: 0 16px !important;
+    bottom: 16px !important;
+  }
+  .about-headline {
+    padding: 0 16px !important;
+    top: 16% !important;
+    transform: translateY(0) !important;
+  }
+  .about-headline h2 {
+    font-size: clamp(1.8rem, 8vw, 2.8rem) !important;
+  }
+}
+
+/* Services cards responsive */
+@media (max-width: 600px) {
+  .service-card {
+    padding: 18px 16px !important;
+    gap: 12px !important;
+  }
+  /* Hide desktop icon, price column, arrow button */
+  .service-card .service-icon { display: none !important; }
+  .service-card .service-price { display: none !important; }
+  .service-card .service-arrow { display: none !important; }
+  /* Show mobile bottom row (price + arrow) */
+  .service-card .service-card-bottom-row { display: flex !important; margin-top: 8px !important; }
+}
+
+/* Scroll progress bar */
+#scroll-progress {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 0%;
+  height: 3px;
+  background: linear-gradient(to left, var(--terracotta), #D98A65);
+  z-index: 9999;
+  transition: width 0.1s linear;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: var(--cream); }
+::-webkit-scrollbar-thumb { background: var(--terracotta-pale); border-radius: 10px; }
+
+@layer utilities {
+  .text-balance { text-wrap: balance; }
 }
