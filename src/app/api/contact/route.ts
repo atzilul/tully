@@ -1,8 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
 
-const resend = new Resend(process.env.RESEND_API_KEY!);
-
 function buildEmailHtml(name: string, phone: string, message: string): string {
   return `
 <!DOCTYPE html>
@@ -121,6 +119,7 @@ export async function POST(req: NextRequest) {
 
     const html = buildEmailHtml(name.trim(), phone.trim(), message?.trim() ?? "");
 
+    const resend = new Resend(process.env.RESEND_API_KEY!);
     const { error } = await resend.emails.send({
       from: "TULLYBABY <onboarding@resend.dev>",
       to: ["atzilul@gmail.com"], // tullygrad@gmail.com יתווסף לאחר אימות דומיין ב-resend.com/domains
